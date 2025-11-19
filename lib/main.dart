@@ -51,6 +51,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
       // Perform authentication
       final bool didAuthenticate = await _localAuth.authenticate(
+        // biometricOnly: true,
         localizedReason: 'Authenticate to access QR scanner',
       );
 
@@ -242,49 +243,54 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Scan Result:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey[300]!),
-                    ),
-                    child: Text(
-                      _scannedResult ?? 'No QR code scanned yet',
-                      textAlign: TextAlign.center,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Scan Result:',
                       style: TextStyle(
-                        fontSize: 16,
-                        color: _scannedResult != null
-                            ? Colors.green[800]
-                            : Colors.grey,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  if (_scannedResult != null)
-                    SizedBox(
+                    const SizedBox(height: 16),
+                    Container(
                       width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: _resetScanner,
-                        icon: const Icon(Icons.qr_code_scanner),
-                        label: const Text('Scan Another QR Code'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: Text(
+                        _scannedResult ?? 'No QR code scanned yet',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: _scannedResult != null
+                              ? Colors.green[800]
+                              : Colors.grey,
                         ),
                       ),
                     ),
-                ],
+                    const SizedBox(height: 20),
+                    if (_scannedResult != null)
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: _resetScanner,
+                          icon: const Icon(Icons.qr_code_scanner),
+                          label: const Text('Scan Another QR Code'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
